@@ -1,6 +1,11 @@
 # OpenAI Assistants API <> gotoHuman
 
-This is a demo to show how you can create a chatbot with the OpenAI Assistants API that uses gotoHuman as a fallback if it cannot answer a question. The case is then sent to the human supervisor`s inbox at gotoHuman where the answer can be entered. This triggers a webhook (that you defined) so you can continue the workflow, e.g. send an email to the customer.
+A NextJS demo chatbot
+- using the OpenAI <b>Assistants API</b>
+- using OpenAI's [<b>Structured Outputs</b>](https://platform.openai.com/docs/guides/structured-outputs/introduction) for reliable JSON schemas
+- using [<b>gotoHuman</b>](https://gotohuman.com) to easily fallback to a human if the bot cannot answer a question
+
+Any unanswered question gets sent to the human supervisor`s inbox at gotoHuman where the answer can be entered. This triggers a webhook (that you defined) so you can continue the workflow, e.g. to send an email to the customer.
 
 Add your OpenAI API Key and your [gotoHuman API key](https://app.gotohuman.com) to `.env.local` or your Environment Variables:
 ```
