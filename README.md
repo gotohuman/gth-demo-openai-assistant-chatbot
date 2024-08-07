@@ -15,9 +15,10 @@ GOTOHUMAN_API_KEY = enterapikeyforgth
 
 Run the app:
 ```
+npm i
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to use the chatbot and [open gotoHuman](https://app.gotohuman.com) to see open cases that need human intervention.
 
 ![Chatbot -> gotoHuman: fallback to human](gth-chat-fallback.gif)
