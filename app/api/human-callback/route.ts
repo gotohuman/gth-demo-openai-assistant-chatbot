@@ -1,14 +1,16 @@
 import {NextRequest, NextResponse} from 'next/server'
-import { GoToHuman } from 'gotohuman'
+import { GoToHuman } from 'gotohuman';
 
 export const runtime = "edge";
 
 export async function POST(request:NextRequest) {
   GoToHuman.handleHumanResponse(await request.json(), {
-    onHumanApproved: ({taskId, actionValues, config}) => {
+    onHumanApproved: (response: any) => {
+      const { taskId, actionValues } = response as { taskId: string, actionValues: any[] };
       console.log(`onHumanApproved: customer email: ${actionValues.find((av)=>av.id === 'email').text} human answer: ${actionValues.find((av)=>av.id === 'answer').text}`);
     },
-    onHumanRejected: ({taskId}) => {
+    onHumanRejected: (response: any) => {
+      const { taskId } = response as { taskId: string };
       console.log(`onHumanRejected task ${taskId}`);
     }
   })

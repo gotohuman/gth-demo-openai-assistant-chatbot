@@ -6,7 +6,6 @@ export const runtime = "edge";
 
 export async function POST(request:NextRequest) {
     const newMessage = await request.json();
-
     const openai = new OpenAI();
 
     if (newMessage.assistantId == null) {
@@ -54,7 +53,7 @@ export async function POST(request:NextRequest) {
     if (newMessage.isToolRequest) {
       const toolCalls = newMessage.toolCalls;
       const tool_outputs = await Promise.all(
-        toolCalls.map(async (toolCall) => {
+        toolCalls.map(async (toolCall: any) => {
           const parameters = toolCall.args;
           switch (toolCall.name) {
             case "call_human": {
@@ -75,7 +74,7 @@ export async function POST(request:NextRequest) {
               } catch (error) {
                 return {
                   tool_call_id: toolCall.id,
-                  output: `The request failed! ${error.message}`,
+                  output: `The request failed!`,
                 };
               }
             }
