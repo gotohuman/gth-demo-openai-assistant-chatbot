@@ -53,7 +53,6 @@ export async function POST(request:NextRequest) {
 
     if (newMessage.isToolRequest) {
       const toolCalls = newMessage.toolCalls;
-      console.log("toolCalls", toolCalls)
       const tool_outputs = await Promise.all(
         toolCalls.map(async (toolCall) => {
           const parameters = toolCall.args;
@@ -61,7 +60,6 @@ export async function POST(request:NextRequest) {
             case "call_human": {
               const email = parameters.email
               const conversation = parameters.conversation
-              console.log("send to gotoHuman", parameters);
               try {
                 const gotoHuman = new GoToHuman({apiKey: process.env.GOTOHUMAN_API_KEY, agentId: "com.gotohuman.demos.chatbot", agentRunId: newMessage.threadId, fetch: globalThis.fetch })
                 await gotoHuman.requestHumanApproval({
@@ -90,7 +88,6 @@ export async function POST(request:NextRequest) {
           }
         })
       );
-      console.log("tool_outputs ", tool_outputs)
 
       const toolStream = openai.beta.threads.runs.submitToolOutputsStream(newMessage.threadId, newMessage.runId, {
         tool_outputs: tool_outputs,
