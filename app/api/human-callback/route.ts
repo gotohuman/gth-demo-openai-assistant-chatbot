@@ -1,18 +1,18 @@
-import {NextRequest, NextResponse} from 'next/server'
-import { GoToHuman } from 'gotohuman';
+import { NextRequest, NextResponse } from 'next/server'
+import { GoToHuman, HumanResponse } from 'gotohuman';
 
 export const runtime = "edge";
 
 export async function POST(request:NextRequest) {
   GoToHuman.handleHumanResponse(await request.json(), {
-    onHumanApproved: (response: any) => {
-      const { taskId, actionValues } = response as { taskId: string, actionValues: any[] };
-      console.log(`onHumanApproved: customer email: ${actionValues.find((av)=>av.id === 'email').text} human answer: ${actionValues.find((av)=>av.id === 'answer').text}`);
+    onHumanApproved(webhookResponse) {
+      const { taskId, humanResponse } = webhookResponse
+      humanResponse === HumanResponse.Approved
+      console.log(`onHumanApproved: customer email: ${GoToHuman.getActionValueById('email', webhookResponse)?.text} human answer: ${GoToHuman.getActionValueById('answer', webhookResponse)?.text}`);
     },
-    onHumanRejected: (response: any) => {
-      const { taskId } = response as { taskId: string };
-      console.log(`onHumanRejected task ${taskId}`);
-    }
+    onHumanRejected(webhookResponse) {
+      console.log(`onHumanRejected task ${webhookResponse.taskId || 'noTaskId'}`);
+    },
   })
   return Response.json({ message: 'Thanks for sending the human feedback' })
 }
