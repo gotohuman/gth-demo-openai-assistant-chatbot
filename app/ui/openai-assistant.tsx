@@ -131,9 +131,18 @@ export default function OpenAIAssistant({
         handleStreamingResponse(response);    
       });
 
-      runner.on('messageDone', (message) => {
-          // get final message content
-          const finalContent =  message.content[0].type == "text" ? message.content[0].text.value : "";
+      runner.on('messageDone', (event) => {
+          // get final message content and remove citations
+          let finalContent = ""
+          if (event.content[0].type === "text") {
+            const { text } = event.content[0];
+            const { annotations } = text;
+      
+            for (let annotation of annotations) {
+              text.value = text.value.replace(annotation.text, "");
+            }
+            finalContent = text.value
+          }
 
           // add assistant message to list of messages
           messageId.current ++;
