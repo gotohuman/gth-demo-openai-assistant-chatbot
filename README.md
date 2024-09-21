@@ -35,4 +35,4 @@ Then in the gotoHuman settings, replace the placeholder webhook endpoint for the
 In our example the endpoint is `DEPLOYMENT_URL/api/human-callback` since this is [the api route we use here](/app/api/human-callback/route.ts).
 
 ### Demo
-![Chatbot -> gotoHuman: fallback to human](gth-chat-fallback.gif)
+![Chatbot -> gotoHuman: fallback to human](chatbot-showcase.jpg)
